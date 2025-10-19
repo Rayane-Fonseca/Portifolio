@@ -128,14 +128,23 @@ body {
     color: var(--color-text-primary);
 
     &.dark-mode{
-        @include theme-colors($primary-dark,$secondary-dark,$accent-dark,
-        $background-dark, $text-primary-dark , $text-secondary-dark, $border-dark );
+        @include theme-colors(
+          $primary-dark,
+          $secondary-dark,
+          $accent-dark,
+          $background-dark,
+          $surface-dark,      // faltava incluir $surface-dark
+          $text-primary-dark,
+          $text-secondary-dark,
+          $border-dark
+);
+
     }
 }
 
 /* === COMPONENTES REUTILIZÁVEIS ===*/
 .container {
-    @include button-container;
+    @include container;
 }
 
 .btn {
@@ -286,7 +295,7 @@ body {
             font-size: $font-size-5xl;
         }
         .highlight {
-            color:(var(--color-primary));
+            color:var(--color-primary);
         }
     }
     &-subtitle {

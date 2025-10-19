@@ -105,12 +105,14 @@ body.dark-mode {
   top: 0;
   left: 0;
   right: 0;
+  width: 100%;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--color-border);
   z-index: 1000;
   transition: all 0.3s ease;
 }
+
 .dark-mode .header {
   background: rgba(15, 23, 42, 0.95);
 }
@@ -406,6 +408,7 @@ body.dark-mode {
   font-weight: 500;
 }
 
+
 /* ===== SEÇÃO PROJETOS ===== */
 
 .container .section {
@@ -434,17 +437,31 @@ body.dark-mode {
 .project-card {
     position: relative;
 }
-.project-image-hover {
-    display: none;
-    position: absolute;
-    top: 100px; /* ajuste conforme necessário */
-    right: 0px;
-    width: 360px; /* ajuste conforme necessário */
-    height: 200px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    z-index: 3;
+.project-image {
+  /* Esse container envolve o retângulo e a imagem */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.project-placeholder {
+  background: #fd9bb1; /* Ou o rosa desejado (#fd9bb1 é só exemplo) */
+  border-radius: 18px;
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Defina largura/altura se quiser um retângulo fixo */
+  width: 140px; /* Altere conforme necessário */
+  height: 110px; /* Altere conforme necessário */
+}
+
+.project-placeholder img {
+  max-width: 80px; /* para garantir que a imagem caiba */
+  max-height: 80px;
+  display: block;
+}
+
 .project-card:hover .project-image-hover {
     display: block;
 }
@@ -498,9 +515,6 @@ body.dark-mode {
   font-weight: 500;
   font-size: 0.875rem;
 }
-.project-card .project-link:hover {
-  text-decoration: underline;
-}
 .projects {
   display: flex;
   flex-direction: column;
@@ -509,14 +523,12 @@ body.dark-mode {
   background: var(--color-surface);
   box-sizing: border-box;
 }
-
 .projects h2 {
   margin-bottom: 3rem;
   justify-content: center;
   align-items: center;
   display: flex;
 }
-
 .project-grid {
   gap: 2rem;
 }
@@ -529,18 +541,21 @@ body.dark-mode {
   justify-content: center;
 }
 
+
+
 /* ===== SEÇÃO EXPERIÊNCIA ===== */
 .experience {
   padding: 5rem 0;
 }
-
 .timeline {
   max-width: 800px;
   margin: 0 auto;
+  display: flex;
+  justify-content: center;
   position: relative;
 }
 .timeline::before {
-  content: "";
+  /* content: ; colocar "" para aperecer uma barra entre as experiencias*/
   position: absolute;
   left: 1.5rem;
   top: 0;
@@ -625,6 +640,8 @@ body.dark-mode {
   line-height: 1.6;
 }
 
+
+
 /* ===== SEÇÃO CONTATO ===== */
 
 /* Centralizando vamos trabalhar juntos e texto abaixo */
@@ -636,13 +653,6 @@ body.dark-mode {
     background: var(--color-surface);
   }
 }
-.contact .contact-methods {
-  display: flex;
-  justify-content: center; /* Centraliza horizontalmente */
-  align-items: center;     /* Centraliza verticalmente */
-  background: var(--color-surface);
-}
-
 .contact {
   padding: 5rem 0;
   background: var(--color-surface);
@@ -665,12 +675,14 @@ body.dark-mode {
 }
 .contact-info p {
   font-size: 1.125rem;
+
   color: var(--color-text-secondary);
   margin-bottom: 2rem;
 }
 .contact-methods {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: center;
   gap: 1rem;
 }
 .contact-method {
@@ -678,18 +690,15 @@ body.dark-mode {
   align-items: center;
   gap: 0.75rem;
 }
-.contact-method .contact-icon {
-  font-size: 1.25rem;
-}
 .contact-method a {
   color: var(--color-primary);
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 700;
+  font-size: 20px;
 }
 .contact-method a:hover {
   text-decoration: underline;
 }
-
 .contact-form {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -731,6 +740,14 @@ body.dark-mode {
   resize: vertical;
   min-height: 120px;
 }
+.contact-icon{
+  display: flex;
+  justify-content: space-evenly;
+  width: 25px;
+  height: 25px;
+}
+
+
 
 /* ===== FOOTER ===== */
 .footer {
@@ -793,4 +810,8 @@ html {
   border-radius: 50%; /* para deixar a imagem circular */
   display: block;
   margin: 0 auto; /* centralizar */
+}
+
+.main-content {
+    padding-top: 80px; /* igual à altura do header */
 }

@@ -35,14 +35,20 @@ class Portfolio {
             themeIcon.textContent = '☀️';
         }
 
+        // Definir ícone do tema caso seja light
+        else {
+            themeIcon.textContent = '🌙';
+        }
+
         themeToggle.addEventListener('click', () => {
             body.classList.toggle('dark-mode');
             const isDark = body.classList.contains('dark-mode');
-            
+
             themeIcon.textContent = isDark ? '☀️' : '🌙';
             localStorage.setItem(CONFIG.THEME_KEY, isDark ? 'dark' : 'light');
-            
+
             // Animação suave do ícone
+            themeIcon.style.transition = 'transform 0.2s ease';
             themeIcon.style.transform = 'scale(0.8)';
             setTimeout(() => {
                 themeIcon.style.transform = 'scale(1)';
@@ -57,18 +63,20 @@ class Portfolio {
             rootMargin: '0px 0px -50px 0px'
         };
 
-        const observer = new IntersectionObserver((entries) => {
+        const observer = new IntersectionObserver((entries, obs) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('animate-in');
-                    
+
                     if (entry.target.classList.contains('about-stats')) {
                         this.animateStats();
                     }
-                    
+
                     if (entry.target.classList.contains('skill-category')) {
                         this.animateSkills(entry.target);
                     }
+                    // Para evitar repetição, desconecte o observer do elemento
+                    obs.unobserve(entry.target);
                 }
             });
         }, observerOptions);
@@ -81,10 +89,10 @@ class Portfolio {
     animateStats() {
         const stats = document.querySelectorAll('.stat-number');
         stats.forEach(stat => {
-            const target = parseInt(stat.textContent);
+            const target = parseInt(stat.textContent) || 0;
             const increment = target / 50;
             let current = 0;
-            
+
             const timer = setInterval(() => {
                 current += increment;
                 if (current >= target) {
@@ -100,29 +108,28 @@ class Portfolio {
     animateSkills(skillCategory) {
         const skillTags = skillCategory.querySelectorAll('.skill-tag');
         skillTags.forEach((tag, index) => {
+            // Inicializa antes do setTimeout para animar corretamente
+            tag.style.opacity = '0';
+            tag.style.transform = 'translateY(20px)';
+            tag.style.transition = 'all 0.3s ease';
+
             setTimeout(() => {
-                tag.style.opacity = '0';
-                tag.style.transform = 'translateY(20px)';
-                tag.style.transition = 'all 0.3s ease';
-                
-                setTimeout(() => {
-                    tag.style.opacity = '1';
-                    tag.style.transform = 'translateY(0)';
-                }, 50);
-            }, index * 100);
+                tag.style.opacity = '1';
+                tag.style.transform = 'translateY(0)';
+            }, index * 100 + 50);
         });
     }
 
     // ===== SCROLL SUAVE PARA NAVEGAÇÃO =====
     initSmoothScrolling() {
-        const navLinks = document.querySelectorAll('.nav-link, .btn[href^="#"]');
-        
+        const navLinks = document.querySelectorAll('.nav-link[href^="#"], .btn[href^="#"]');
+
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const targetId = link.getAttribute('href');
                 const targetElement = document.querySelector(targetId);
-                
+
                 if (targetElement) {
                     const offsetTop = targetElement.offsetTop - CONFIG.SCROLL_OFFSET;
                     window.scrollTo({
@@ -143,12 +150,12 @@ class Portfolio {
 
         window.addEventListener('scroll', () => {
             const scrollPos = window.scrollY + CONFIG.SCROLL_OFFSET + 50;
-            
+
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
                 const sectionHeight = section.offsetHeight;
                 const sectionId = section.getAttribute('id');
-                
+
                 if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
                     navLinks.forEach(link => {
                         link.classList.remove('active');
@@ -167,21 +174,20 @@ class Portfolio {
         if (!heroTitle) return;
 
         const highlight = heroTitle.querySelector('.highlight');
-        const highlightText = highlight ? highlight.textContent : '';
-        
-        if (highlight) {
-            highlight.style.opacity = '0';
-            setTimeout(() => {
-                this.typeWriter(highlight, highlightText, 100);
-            }, 1000);
-        }
+        if (!highlight) return;
+
+        const highlightText = highlight.textContent;
+        highlight.style.opacity = '0';
+        setTimeout(() => {
+            this.typeWriter(highlight, highlightText, 100);
+        }, 1000);
     }
 
     typeWriter(element, text, speed) {
         element.style.opacity = '1';
         element.textContent = '';
         let i = 0;
-        
+
         const timer = setInterval(() => {
             if (i < text.length) {
                 element.textContent += text.charAt(i);
@@ -189,6 +195,7 @@ class Portfolio {
             } else {
                 clearInterval(timer);
                 element.style.borderRight = '2px solid var(--color-primary)';
+                // Animação de blink em CSS seria melhor para o cursor
                 setTimeout(() => {
                     element.style.borderRight = 'none';
                 }, 1000);
@@ -250,7 +257,7 @@ class Portfolio {
 
     showFieldError(field, message) {
         field.style.borderColor = '#ef4444';
-        
+
         let errorElement = field.parentNode.querySelector('.field-error');
         if (!errorElement) {
             errorElement = document.createElement('span');
@@ -273,12 +280,9 @@ class Portfolio {
     }
 
     async handleFormSubmission(form) {
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData);
-        
         const inputs = form.querySelectorAll('input, textarea');
         let isFormValid = true;
-        
+
         inputs.forEach(input => {
             if (!this.validateField(input)) {
                 isFormValid = false;
@@ -292,7 +296,7 @@ class Portfolio {
 
         const submitButton = form.querySelector('button[type="submit"]');
         const originalText = submitButton.textContent;
-        
+
         submitButton.textContent = 'Enviando...';
         submitButton.disabled = true;
 
@@ -300,7 +304,7 @@ class Portfolio {
             await new Promise(resolve => setTimeout(resolve, 2000));
             this.showNotification('Mensagem enviada com sucesso! Entrarei em contato em breve.', 'success');
             form.reset();
-        } catch (error) {
+        } catch {
             this.showNotification('Erro ao enviar mensagem. Por favor, tente novamente.', 'error');
         } finally {
             submitButton.textContent = originalText;
@@ -330,6 +334,7 @@ class Portfolio {
             transition: transform 0.3s ease;
             max-width: 400px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            font-family: var(--font-family, 'Inter', sans-serif);
         `;
 
         const colors = {
@@ -381,8 +386,8 @@ class Portfolio {
         });
     }
 
-    // ===== MANIPULADORES DE EVENTOS =====
     handleResize() {
+        // Evento para redimensionamento (pode ser expandido)
         console.log('Window resized');
     }
 
@@ -390,12 +395,11 @@ class Portfolio {
         const hero = document.querySelector('.hero');
         if (hero) {
             const scrolled = window.pageYOffset;
-            const parallax = scrolled * 0.5;
+            const parallax = scrolled * 0.0;
             hero.style.transform = `translateY(${parallax}px)`;
         }
     }
 
-    // ===== UTILITÁRIOS =====
     debounce(func, wait) {
         let timeout;
         return function executedFunction(...args) {
