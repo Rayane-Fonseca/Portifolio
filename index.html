@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Rayane - Desenvolvedora Web</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,9 +25,13 @@
                 <li> <a href="#contact" class="nav-link"> Contato</a></li>
             </ul>
 
-            <button id="theme-toggle" class="theme-toggle" aria-label="Alternar tema">
-                    <span class="theme-icon">🌙</span>
-            </button>
+            <label class="theme-switch">
+                <input type="checkbox" id="theme-toggle" />
+                <span class="slider">
+                    <span class="theme-icon-moon">🌙</span>
+                    <span class="theme-icon">☀️</span>
+                </span>
+            </label>
         </nav>
     </header>
 
@@ -120,7 +124,9 @@
                         <h3> Ferramentas</h3>
                         <div class="skill-list">
                             <span class="skill-tag">Git</span>
+                            <span class="skill-tag">Github</span>
                             <span class="skill-tag">VS Code</span>
+                            <span class="skill-tag">Workbench</span>
                         </div>
                     </div>
                 </div>
@@ -150,8 +156,8 @@
                                     <span class="tech-tag">JavaScript</span>
                                 </div>
                                 <div class="project-link">
-                                    <a href="https://github.com/Rayane-Fonseca/RickandMorty-API.git" class="project-link" target="_blank">Ver Demo</a>
-                                    <a href="https://rayane-fonseca.github.io/RickandMorty-API/" class="project-link" target="_blank">Ver código</a>
+                                    <a href="https://rayane-fonseca.github.io/RickandMorty-API/" class="project-link" target="_blank">Ver Demo</a>
+                                    <a href="https://github.com/Rayane-Fonseca/RickandMorty-API.git" class="project-link" target="_blank">Ver código</a>
                                 </div>
                             </div>
                         </article>
@@ -165,8 +171,7 @@
                                 <h3>Página de Login</h3>
                                 <p>Uma página de login é a porta de entrada para uma aplicação, permitindo que usuários autorizados acessem suas funcionalidades de forma segura.
                                         No projeto dessa página de login, o foco foi criar uma interface intuitiva e responsiva, que funciona bem em diferentes dispositivos.
-                                        A implementação incluiu validação de dados para garantir que os campos estejam preenchidos corretamente, além de feedback visual para 
-                                        o usuário, como mensagens de erro claras. O design foi pensado para ser simples e atraente, facilitando a navegação e transmitindo 
+                                        O design foi pensado para ser simples e atraente, facilitando a navegação e transmitindo 
                                         confiança ao usuário.
                                 </p>
                                 <div class="project-tech">
@@ -174,8 +179,8 @@
                                     <span class="tech-tag">CSS</span>
                                 </div>
                                 <div class="project-link">
-                                    <a href="https://github.com/Rayane-Fonseca/LoginPage.git" class="project-link" target="_blank">Ver Demo</a>
-                                    <a href="https://rayane-fonseca.github.io/LoginPage/" class="project-link" target="_blank">Ver código</a>
+                                    <a href="https://rayane-fonseca.github.io/LoginPage/" class="project-link" target="_blank">Ver Demo</a>
+                                    <a href="https://github.com/Rayane-Fonseca/LoginPage.git" class="project-link" target="_blank">Ver código</a>
                                 </div>
                             </div>
                         </article>
@@ -189,7 +194,7 @@
                                 <h3>Projeto de Streaming</h3>
                                 <p>Eu desenvolvi um projeto de streaming com três páginas principais: uma página de login para autenticar usuários com segurança, uma 
                                     página inicial onde os filmes são exibidos em uma interface organizada e fácil de navegar, e uma página de configuração onde o usuário
-                                     pode personalizar preferências como idioma e qualidade do vídeo. Esse projeto oferece uma experiência completa, desde o acesso até o 
+                                     pode personalizar dados. Esse projeto oferece uma experiência completa, desde o acesso até o 
                                      consumo de conteúdo e ajustes pessoais, focando na usabilidade e na satisfação do usuário durante todo o uso da plataforma.
                                 </p>
                                 <div class="project-tech">
@@ -197,8 +202,8 @@
                                     <span class="tech-tag">CSS</span>
                                 </div>
                                 <div class="project-link">
-                                    <a href="https://github.com/Rayane-Fonseca/Starming.git" class="project-link" target="_blank">Ver Demo</a>
-                                    <a href="https://rayane-fonseca.github.io/Starming/" class="project-link" target="_blank">Ver código</a>
+                                    <a href="https://rayane-fonseca.github.io/Starming/" class="project-link" target="_blank">Ver Demo</a>
+                                    <a href="https://github.com/Rayane-Fonseca/Starming.git" class="project-link" target="_blank">Ver código</a>
                                 </div>
                             </div>
                         </article>
@@ -211,13 +216,12 @@
                 <h2 class="section-title">Experiência</h2>
                 <div class="timeline">
                     <div class="timeline-item">
-                        <div class="timeline-marker"></div>
                         <div class="timeline-content">
                             <h3>Desenvolvimento de Sistemas</h3>
                             <h4>Senai - Firjan</h4>
                             <span class="timeline-date">2025 - Presente</span>
                             <p>Curso técnico em Desenvolvimento de Sistemas em andamento, com foco em: <br>
-                                <br>- Desenvolvimento (HTML, CSS, JS e Python). <br>
+                                <br>- Desenvolvimento (HTML, CSS, JS, Python e SQL). <br>
                                 - Análise de dados. <br>
                                 - Lógica de programação. <br>
                                 - Construção de aplicações web. <br>
@@ -230,8 +234,7 @@
         <section id="contact" class="contact">
             <div class="contact-info">
                 <h3>Vamos trabalhar juntos!</h3>
-                <p>Estou sempre aberta a novas oportunidades e projetos interessantes. 
-                Entre em contato comigo para discutir projetos, oportunidades ou apenas para trocar ideias. </p>
+                <p>Estou aberta a novas parcerias e projetos inspiradores. Entre em contato para conversarmos sobre oportunidades ou trocar ideias.</p>
             </div>
             <div class="contact-methods">
                 <div class="contact-method">

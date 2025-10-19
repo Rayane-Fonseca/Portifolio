@@ -21,40 +21,48 @@ class Portfolio {
     }
 
     // ===== GERENCIAMENTO DE TEMA =====
-    initTheme() {
-        const themeToggle = document.getElementById('theme-toggle');
-        const body = document.body;
-        const themeIcon = document.querySelector('.theme-icon');
+initTheme() {
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    const themeIcon = document.querySelector('.theme-icon');
+    
+    const themeIconMoon = document.querySelector('.theme-icon-moon');
 
-        // Verificar preferência salva ou do sistema
-        const savedTheme = localStorage.getItem(CONFIG.THEME_KEY);
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-            body.classList.add('dark-mode');
-            themeIcon.textContent = '☀️';
-        }
+    // Verificar preferência salva ou do sistema
+    const savedTheme = localStorage.getItem(CONFIG.THEME_KEY);
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-        // Definir ícone do tema caso seja light
-        else {
-            themeIcon.textContent = '🌙';
-        }
-
-        themeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            const isDark = body.classList.contains('dark-mode');
-
-            themeIcon.textContent = isDark ? '☀️' : '🌙';
-            localStorage.setItem(CONFIG.THEME_KEY, isDark ? 'dark' : 'light');
-
-            // Animação suave do ícone
-            themeIcon.style.transition = 'transform 0.2s ease';
-            themeIcon.style.transform = 'scale(0.8)';
-            setTimeout(() => {
-                themeIcon.style.transform = 'scale(1)';
-            }, 150);
-        });
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        body.classList.add('dark-mode');
+        themeToggle.checked = true;
+        themeIcon.textContent = '🌙'; // Lua modo escuro
+    } else {
+        body.classList.remove('dark-mode');
+        themeToggle.checked = false;
+        themeIcon.textContent = '☀️'; // Sol modo claro
     }
+
+    themeToggle.addEventListener('change', () => {
+        body.classList.toggle('dark-mode');
+        const isDark = body.classList.contains('dark-mode');
+        localStorage.setItem(CONFIG.THEME_KEY, isDark ? 'dark' : 'light');
+
+        // animação do ícone
+        themeIcon.style.transition = 'transform 0.2s ease';
+        themeIcon.style.transform = 'scale(0.9)';
+        setTimeout(() => {
+            themeIcon.style.transform = 'scale(1)';
+        }, 150);
+
+        themeIconMoon.style.transition = 'transform 0.2s ease';
+        themeIconMoon.style.transform = 'scale(0.8)';
+        setTimeout(() => {
+            themeIconMoon.style.transform = 'scale(1)';
+        }, 150);
+    });
+}
+
 
     // ===== ANIMAÇÕES DE SCROLL =====
     initScrollAnimations() {
@@ -366,7 +374,7 @@ class Portfolio {
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
             if (!localStorage.getItem(CONFIG.THEME_KEY)) {
                 document.body.classList.toggle('dark-mode', e.matches);
-                document.querySelector('.theme-icon').textContent = e.matches ? '☀️' : '🌙';
+                document.querySelector('.theme-icon').textContent = e.matches ? '🌙' : '☀️';
             }
         });
 
@@ -417,46 +425,3 @@ class Portfolio {
 document.addEventListener('DOMContentLoaded', () => {
     new Portfolio();
 });
-
-// ===== ADICIONAR ESTILOS CSS DINÂMICOS =====
-const dynamicStyles = `
-    .animate-in {
-        animation: fadeInUp 0.6s ease-out forwards;
-    }
-    
-    .nav-link.active {
-        color: var(--color-primary) !important;
-        font-weight: 600;
-    }
-    
-    .notification {
-        font-family: var(--font-family, 'Inter', sans-serif);
-    }
-    
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    .hero {
-        transition: transform 0.1s ease-out;
-    }
-    
-    .theme-toggle .theme-icon {
-        transition: transform 0.2s ease;
-    }
-    
-    .skill-tag {
-        transition: all 0.3s ease;
-    }
-`;
-
-const styleSheet = document.createElement('style');
-styleSheet.textContent = dynamicStyles;
-document.head.appendChild(styleSheet);
