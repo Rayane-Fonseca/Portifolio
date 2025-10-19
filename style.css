@@ -257,7 +257,7 @@ body.dark-mode {
   }
 }
 .hero-title {
-  padding-top: 250px;
+
   font-size: 2.25rem;
   font-weight: 700;
   margin-bottom: 1rem;
@@ -266,6 +266,7 @@ body.dark-mode {
 @media (min-width: 768px) {
   .hero-title {
     font-size: 3rem;
+    padding-top: 250px;
   }
 }
 .hero-title .highlight {
