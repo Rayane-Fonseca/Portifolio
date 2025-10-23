@@ -546,7 +546,6 @@ body.dark-mode {
   .timeline-item {
     width: 50%;
     padding-left: 0;
-    padding-right: 2rem;
   }
   .timeline-item:nth-child(even) {
     left: 50%;
