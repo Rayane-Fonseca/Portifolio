@@ -550,7 +550,6 @@ body.dark-mode {
   .timeline-item:nth-child(even) {
     left: 50%;
     padding-right: 0;
-    padding-left: 2rem;
   }
 }
 .timeline-marker {
